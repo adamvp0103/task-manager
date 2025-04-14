@@ -10,6 +10,7 @@ interface TaskContextType {
   tasks: Task[];
   addTask: (task: SubmittedTask) => void;
   editTask: (id: string, task: SubmittedTask) => void;
+  toggleTask: (id: string) => void;
   deleteTask: (id: string) => void;
 }
 
@@ -52,6 +53,14 @@ export const TaskProvider: FC<ProviderProps> = ({ children }) => {
     setTasks(tasks.map((t) => (t.id === id ? { ...t, ...task } : t)));
   };
 
+  const toggleTask = (id: string) => {
+    setTasks(
+      tasks.map((task) =>
+        task.id === id ? { ...task, completed: !task.completed } : task
+      )
+    );
+  };
+
   const deleteTask = (id: string) => {
     setTasks(tasks.filter((task) => task.id !== id));
   };
@@ -60,6 +69,7 @@ export const TaskProvider: FC<ProviderProps> = ({ children }) => {
     tasks,
     addTask,
     editTask,
+    toggleTask,
     deleteTask,
   };
 

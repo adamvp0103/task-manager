@@ -50,22 +50,25 @@ export default function TaskForm() {
         <input
           id="high-priority-input"
           type="radio"
-          onClick={() => setPriorityInputValue(Priorities.High)}
-          defaultChecked={priorityInputValue === Priorities.High}
+          name="priority"
+          onChange={() => setPriorityInputValue(Priorities.High)}
+          checked={priorityInputValue === Priorities.High}
         />
         <label htmlFor="high-priority-input">High</label>
         <input
           id="medium-priority-input"
           type="radio"
-          onClick={() => setPriorityInputValue(Priorities.Medium)}
-          defaultChecked={priorityInputValue === Priorities.Medium}
+          name="priority"
+          onChange={() => setPriorityInputValue(Priorities.Medium)}
+          checked={priorityInputValue === Priorities.Medium}
         />
         <label htmlFor="medium-priority-input">Medium</label>
         <input
           id="low-priority-input"
           type="radio"
-          onClick={() => setPriorityInputValue(Priorities.Low)}
-          defaultChecked={priorityInputValue === Priorities.Low}
+          name="priority"
+          onChange={() => setPriorityInputValue(Priorities.Low)}
+          checked={priorityInputValue === Priorities.Low}
         />
         <label htmlFor="low-priority-input">Low</label>
 
