@@ -1,9 +1,16 @@
-import React, { FC, ReactNode, useState } from 'react';
+import React, { FC, ReactNode, useContext, useState } from 'react';
 
-enum Priorities {
+export enum Priorities {
   High = 'high',
   Medium = 'medium',
   Low = 'low',
+}
+
+interface TaskContextType {
+  tasks: Task[];
+  addTask: (task: SubmittedTask) => void;
+  editTask: (id: string, task: SubmittedTask) => void;
+  deleteTask: (id: string) => void;
 }
 
 interface ProviderProps {
@@ -24,7 +31,9 @@ interface SubmittedTask {
   priority: Priorities;
 }
 
-export const TaskContext = React.createContext({});
+export const TaskContext = React.createContext<TaskContextType | undefined>(
+  undefined
+);
 
 export const TaskProvider: FC<ProviderProps> = ({ children }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -47,11 +56,24 @@ export const TaskProvider: FC<ProviderProps> = ({ children }) => {
     setTasks(tasks.filter((task) => task.id !== id));
   };
 
-  const providerValue = { tasks, addTask, editTask, deleteTask };
+  const providerValue: TaskContextType = {
+    tasks,
+    addTask,
+    editTask,
+    deleteTask,
+  };
 
   return (
     <TaskContext.Provider value={providerValue}>
       {children}
     </TaskContext.Provider>
   );
+};
+
+export const useTaskContext = () => {
+  const context = useContext(TaskContext);
+  if (!context) {
+    throw new Error('useTaskContext must be used within a TaskProvider');
+  }
+  return context;
 };
