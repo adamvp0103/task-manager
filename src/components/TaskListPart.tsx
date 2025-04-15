@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { Task } from '../TaskContext';
 import TaskListItem from './TaskListItem';
+import { sortByDate } from '../util/sort';
 
 interface TaskListPartProps {
   label: string;
@@ -13,7 +14,7 @@ const TaskListPart: FC<TaskListPartProps> = ({ label, tasks }) => {
       <div>
         <h3>{label}</h3>
         <ol>
-          {tasks.map((task) => (
+          {sortByDate(tasks).map((task) => (
             <TaskListItem task={task} />
           ))}
         </ol>
