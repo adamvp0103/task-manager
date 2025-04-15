@@ -8,8 +8,10 @@ export enum Priorities {
 
 interface TaskContextType {
   tasks: Task[];
+  editId: string;
+  setEditId: (id: string) => void;
   addTask: (task: SubmittedTask) => void;
-  editTask: (id: string, task: SubmittedTask) => void;
+  editTask: (task: SubmittedTask) => void;
   toggleTask: (id: string) => void;
   deleteTask: (id: string) => void;
 }
@@ -38,6 +40,7 @@ export const TaskContext = React.createContext<TaskContextType | undefined>(
 
 export const TaskProvider: FC<ProviderProps> = ({ children }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [editId, setEditId] = useState<string>('');
 
   const addTask = (task: SubmittedTask) => {
     const newTask: Task = {
@@ -49,8 +52,8 @@ export const TaskProvider: FC<ProviderProps> = ({ children }) => {
     setTasks([...tasks, newTask]);
   };
 
-  const editTask = (id: string, task: SubmittedTask) => {
-    setTasks(tasks.map((t) => (t.id === id ? { ...t, ...task } : t)));
+  const editTask = (task: SubmittedTask) => {
+    setTasks(tasks.map((t) => (t.id === editId ? { ...t, ...task } : t)));
   };
 
   const toggleTask = (id: string) => {
@@ -67,6 +70,8 @@ export const TaskProvider: FC<ProviderProps> = ({ children }) => {
 
   const providerValue: TaskContextType = {
     tasks,
+    editId,
+    setEditId,
     addTask,
     editTask,
     toggleTask,

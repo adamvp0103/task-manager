@@ -1,23 +1,42 @@
-import { FormEvent, useContext, useState } from 'react';
+import { FormEvent, useContext, useEffect, useState } from 'react';
 import { Priorities, TaskContext, useTaskContext } from '../TaskContext';
 
 export default function TaskForm() {
+  const { tasks, editId, setEditId, addTask, editTask } = useTaskContext();
+
   const [taskInputValue, setTaskInputValue] = useState<string>('');
   const [dateInputValue, setDateInputValue] = useState<string>('');
   const [priorityInputValue, setPriorityInputValue] = useState<Priorities>(
     Priorities.Medium
   );
 
-  const { addTask } = useTaskContext();
+  useEffect(() => {
+    if (editId) {
+      const task = tasks.find((t) => t.id === editId);
+
+      setTaskInputValue(task?.task ?? '');
+      setDateInputValue(task?.date ?? '');
+      setPriorityInputValue(task?.priority ?? Priorities.Medium);
+    }
+  }, [editId]);
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
 
-    addTask({
-      task: taskInputValue,
-      date: dateInputValue,
-      priority: priorityInputValue,
-    });
+    if (editId) {
+      editTask({
+        task: taskInputValue,
+        date: dateInputValue,
+        priority: priorityInputValue,
+      });
+      setEditId('');
+    } else {
+      addTask({
+        task: taskInputValue,
+        date: dateInputValue,
+        priority: priorityInputValue,
+      });
+    }
 
     setTaskInputValue('');
     setDateInputValue('');
@@ -26,7 +45,7 @@ export default function TaskForm() {
 
   return (
     <div>
-      <h2>Add Task</h2>
+      <h2>{editId ? 'Edit' : 'Add'} Task</h2>
       <form onSubmit={(event) => handleSubmit(event)}>
         <label htmlFor="task-input">Task</label>
         <input
@@ -72,7 +91,7 @@ export default function TaskForm() {
         />
         <label htmlFor="low-priority-input">Low</label>
 
-        <button type="submit">Add</button>
+        <button type="submit">{editId ? 'Apply' : 'Add'}</button>
       </form>
     </div>
   );

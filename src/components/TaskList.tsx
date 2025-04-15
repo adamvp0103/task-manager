@@ -1,7 +1,7 @@
 import { useTaskContext } from '../TaskContext';
 
 export default function TaskList() {
-  const { tasks, toggleTask } = useTaskContext();
+  const { tasks, setEditId, toggleTask } = useTaskContext();
 
   return (
     <ul>
@@ -13,6 +13,7 @@ export default function TaskList() {
           <p>Priority: {task.priority}</p>
           <p>Completed: {String(task.completed)}</p>
           <button onClick={() => toggleTask(task.id)}>Toggle Completed</button>
+          <button onClick={() => setEditId(task.id)}>Edit</button>
         </li>
       ))}
     </ul>
