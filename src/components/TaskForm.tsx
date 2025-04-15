@@ -1,5 +1,5 @@
-import { FormEvent, useContext, useEffect, useState } from 'react';
-import { Priorities, TaskContext, useTaskContext } from '../TaskContext';
+import { FormEvent, useEffect, useState } from 'react';
+import { Priorities, useTaskContext } from '../TaskContext';
 
 export default function TaskForm() {
   const { tasks, editId, setEditId, addTask, editTask } = useTaskContext();
@@ -12,13 +12,24 @@ export default function TaskForm() {
 
   useEffect(() => {
     if (editId) {
+      // Get task being edited
       const task = tasks.find((t) => t.id === editId);
 
+      // Populate fields with its values
       setTaskInputValue(task?.task ?? '');
       setDateInputValue(task?.date ?? '');
       setPriorityInputValue(task?.priority ?? Priorities.Medium);
+    } else {
+      // If edit is canceled
+      setTaskInputValue('');
+      setDateInputValue('');
+      setPriorityInputValue(Priorities.Medium);
     }
   }, [editId]);
+
+  const handleEditCancel = () => {
+    setEditId('');
+  };
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -91,6 +102,7 @@ export default function TaskForm() {
         />
         <label htmlFor="low-priority-input">Low</label>
 
+        {editId && <button onClick={handleEditCancel}>Cancel</button>}
         <button type="submit">{editId ? 'Apply' : 'Add'}</button>
       </form>
     </div>

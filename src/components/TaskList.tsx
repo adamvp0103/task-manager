@@ -1,7 +1,14 @@
 import { useTaskContext } from '../TaskContext';
 
 export default function TaskList() {
-  const { tasks, setEditId, toggleTask } = useTaskContext();
+  const { tasks, editId, setEditId, toggleTask, deleteTask } = useTaskContext();
+
+  const handleDelete = (id: string) => {
+    if (editId === id) {
+      setEditId('');
+    }
+    deleteTask(id);
+  };
 
   return (
     <ul>
@@ -14,6 +21,7 @@ export default function TaskList() {
           <p>Completed: {String(task.completed)}</p>
           <button onClick={() => toggleTask(task.id)}>Toggle Completed</button>
           <button onClick={() => setEditId(task.id)}>Edit</button>
+          <button onClick={() => handleDelete(task.id)}>Delete</button>
         </li>
       ))}
     </ul>
