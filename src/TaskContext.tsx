@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useContext, useState } from 'react';
+import React, { FC, ReactNode, useContext, useEffect, useState } from 'react';
 
 export enum Priorities {
   High = 'high',
@@ -39,8 +39,14 @@ export const TaskContext = React.createContext<TaskContextType | undefined>(
 );
 
 export const TaskProvider: FC<ProviderProps> = ({ children }) => {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState<Task[]>(
+    JSON.parse(localStorage.getItem('tasks') ?? '[]')
+  );
   const [editId, setEditId] = useState<string>('');
+
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]);
 
   const addTask = (task: SubmittedTask) => {
     const newTask: Task = {
