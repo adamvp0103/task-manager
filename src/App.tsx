@@ -6,8 +6,10 @@ import { TaskProvider } from './TaskContext';
 function App() {
   return (
     <TaskProvider>
-      <TaskForm />
-      <TaskList />
+      <div className="container">
+        <TaskList />
+        <TaskForm />
+      </div>
     </TaskProvider>
   );
 }

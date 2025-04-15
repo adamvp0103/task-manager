@@ -1,29 +1,51 @@
-import { useTaskContext } from '../TaskContext';
+import { useEffect, useState } from 'react';
+import { Task, useTaskContext } from '../TaskContext';
+import {
+  getLaterTasks,
+  getOverdueTasks,
+  getTodayTasks,
+  getTomorrowTasks,
+} from '../util/dates';
+import TaskListPart from './TaskListPart';
 
 export default function TaskList() {
-  const { tasks, editId, setEditId, toggleTask, deleteTask } = useTaskContext();
+  const { tasks } = useTaskContext();
 
-  const handleDelete = (id: string) => {
-    if (editId === id) {
-      setEditId('');
-    }
-    deleteTask(id);
-  };
+  const [overdueTasks, setOverdueTasks] = useState<Task[]>(
+    getOverdueTasks(tasks)
+  );
+
+  const [todayTasks, setTodayTasks] = useState<Task[]>(getTodayTasks(tasks));
+  const [tomorrowTasks, setTomorrowTasks] = useState<Task[]>(
+    getTomorrowTasks(tasks)
+  );
+  const [laterTasks, setLaterTasks] = useState<Task[]>(getLaterTasks(tasks));
+
+  useEffect(() => {
+    setOverdueTasks(getOverdueTasks(tasks));
+    setTodayTasks(getTodayTasks(tasks));
+    setTomorrowTasks(getTomorrowTasks(tasks));
+    setLaterTasks(getLaterTasks(tasks));
+  }, [tasks]);
 
   return (
-    <ul>
-      {tasks.map((task) => (
-        <li key={task.id}>
-          <h3>{task.task}</h3>
-          <p>ID: {task.id}</p>
-          <p>Date: {task.date}</p>
-          <p>Priority: {task.priority}</p>
-          <p>Completed: {String(task.completed)}</p>
-          <button onClick={() => toggleTask(task.id)}>Toggle Completed</button>
-          <button onClick={() => setEditId(task.id)}>Edit</button>
-          <button onClick={() => handleDelete(task.id)}>Delete</button>
-        </li>
-      ))}
-    </ul>
+    <div>
+      <h2>Your Tasks</h2>
+      {tasks.length ? (
+        // <ul>
+        //   {tasks.map((task) => (
+        //     <TaskListItem task={task} />
+        //   ))}
+        // </ul>
+        <div>
+          <TaskListPart label="Overdue" tasks={overdueTasks} />
+          <TaskListPart label="Today" tasks={todayTasks} />
+          <TaskListPart label="Tomorrow" tasks={tomorrowTasks} />
+          <TaskListPart label="Later" tasks={laterTasks} />
+        </div>
+      ) : (
+        <p>No tasks</p>
+      )}
+    </div>
   );
 }

@@ -20,7 +20,7 @@ interface ProviderProps {
   children: ReactNode;
 }
 
-interface Task {
+export interface Task {
   id: string;
   task: string;
   date: string;
