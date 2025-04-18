@@ -6,7 +6,7 @@ export enum Priorities {
   Low = 'low',
 }
 
-interface TaskContextType {
+interface ContextType {
   tasks: Task[];
   editId: string;
   setEditId: (id: string) => void;
@@ -14,6 +14,9 @@ interface TaskContextType {
   editTask: (task: SubmittedTask) => void;
   toggleTask: (id: string) => void;
   deleteTask: (id: string) => void;
+  formVisible: boolean;
+  showForm: () => void;
+  hideForm: () => void;
 }
 
 interface ProviderProps {
@@ -34,15 +37,16 @@ interface SubmittedTask {
   priority: Priorities;
 }
 
-export const TaskContext = React.createContext<TaskContextType | undefined>(
+export const AppContext = React.createContext<ContextType | undefined>(
   undefined
 );
 
-export const TaskProvider: FC<ProviderProps> = ({ children }) => {
+export const AppProvider: FC<ProviderProps> = ({ children }) => {
   const [tasks, setTasks] = useState<Task[]>(
     JSON.parse(localStorage.getItem('tasks') ?? '[]')
   );
   const [editId, setEditId] = useState<string>('');
+  const [formVisible, setFormVisible] = useState<boolean>(false);
 
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -74,7 +78,15 @@ export const TaskProvider: FC<ProviderProps> = ({ children }) => {
     setTasks(tasks.filter((task) => task.id !== id));
   };
 
-  const providerValue: TaskContextType = {
+  const showForm = () => {
+    setFormVisible(true);
+  };
+
+  const hideForm = () => {
+    setFormVisible(false);
+  };
+
+  const providerValue: ContextType = {
     tasks,
     editId,
     setEditId,
@@ -82,19 +94,20 @@ export const TaskProvider: FC<ProviderProps> = ({ children }) => {
     editTask,
     toggleTask,
     deleteTask,
+    formVisible,
+    showForm,
+    hideForm,
   };
 
   return (
-    <TaskContext.Provider value={providerValue}>
-      {children}
-    </TaskContext.Provider>
+    <AppContext.Provider value={providerValue}>{children}</AppContext.Provider>
   );
 };
 
-export const useTaskContext = () => {
-  const context = useContext(TaskContext);
+export const useAppContext = () => {
+  const context = useContext(AppContext);
   if (!context) {
-    throw new Error('useTaskContext must be used within a TaskProvider');
+    throw new Error('useAppContext must be used within a AppProvider');
   }
   return context;
 };

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Task, useTaskContext } from '../TaskContext';
+import { Task, useAppContext } from '../AppContext';
 import {
   getLaterTasks,
   getOverdueTasks,
@@ -9,7 +9,7 @@ import {
 import TaskListPart from './TaskListPart';
 
 export default function TaskList() {
-  const { tasks } = useTaskContext();
+  const { tasks, formVisible, showForm } = useAppContext();
 
   const [overdueTasks, setOverdueTasks] = useState<Task[]>(
     getOverdueTasks(tasks)
@@ -29,14 +29,9 @@ export default function TaskList() {
   }, [tasks]);
 
   return (
-    <div>
-      <h2>Your Tasks</h2>
+    <div className={`${formVisible ? 'mobile-hidden' : ''} fill-width`}>
+      <h2 className="page-heading">Your Tasks</h2>
       {tasks.length ? (
-        // <ul>
-        //   {tasks.map((task) => (
-        //     <TaskListItem task={task} />
-        //   ))}
-        // </ul>
         <div>
           <TaskListPart label="Overdue" tasks={overdueTasks} />
           <TaskListPart label="Today" tasks={todayTasks} />
@@ -44,8 +39,14 @@ export default function TaskList() {
           <TaskListPart label="Later" tasks={laterTasks} />
         </div>
       ) : (
-        <p>No tasks</p>
+        <p className="translucent horizontally-centered-text italic">No tasks</p>
       )}
+      <button
+        className="mobile-only fixed-bottom-right button green-hoverable"
+        onClick={showForm}
+      >
+        Add Task
+      </button>
     </div>
   );
 }

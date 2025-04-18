@@ -1,0 +1,192 @@
+$bg-color: #000;
+$layer-1-color: #222;
+$primary-color: #fff;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui;
+  font-size: 1rem;
+  color: $primary-color;
+
+  // border: 1px solid red !important;
+}
+
+ol {
+  list-style: none;
+}
+
+:root {
+  background-color: $bg-color;
+}
+
+.container {
+  display: flex;
+  margin: 2rem 1rem 6rem;
+}
+
+.page-heading {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+
+.section-heading {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.task-heading {
+  font-size: 1.25rem;
+}
+
+.card {
+  display: block;
+  margin-bottom: 1rem;
+  border-radius: 1rem;
+  padding: 1rem;
+  background-color: $layer-1-color;
+  overflow: hidden;
+}
+
+.priority-label {
+  margin: -1rem -1rem 0.5rem;
+  text-align: center;
+}
+
+.button {
+  border: none;
+  border-radius: 1rem;
+  padding: 1rem 2rem;
+  cursor: pointer;
+
+  &.compact {
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+  }
+}
+
+.input {
+  width: 100%;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: $bg-color;
+}
+
+.radio-option {
+  & > input {
+    margin-right: 0.5rem;
+    vertical-align: middle;
+  }
+}
+
+.red {
+  background-color: #d00;
+  color: #fff;
+}
+
+.red-hoverable {
+  background-color: #d00;
+  color: #fff;
+
+  &:hover {
+    background-color: #b00;
+  }
+}
+
+.layer-1-bg {
+  background-color: $layer-1-color;
+}
+
+.yellow-hoverable {
+  background-color: #da0;
+  color: #fff;
+
+  &:hover {
+    background-color: #b80;
+  }
+}
+
+.green-hoverable {
+  background-color: #0d0;
+  color: #fff;
+
+  &:hover {
+    background-color: #0b0;
+  }
+}
+
+.blue {
+  background-color: #00d;
+  color: #fff;
+}
+
+.fixed-bottom-right {
+  position: fixed;
+  right: 1rem;
+  bottom: 2rem;
+  box-shadow: 0 0 1rem #000;
+}
+
+.block {
+  display: block;
+}
+
+.fill-width {
+  width: 100%;
+}
+
+.horizontally-centered-text {
+  text-align: center;
+}
+
+.small-text {
+  font-size: 0.75rem;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.stack-vertically {
+  display: flex;
+  flex-direction: column;
+}
+
+.translucent {
+  opacity: 0.5;
+}
+
+.small-gap {
+  gap: 0.5rem;
+}
+
+.space-evenly {
+  display: flex;
+  gap: 1rem;
+
+  * {
+    flex: 1;
+  }
+
+  &.compact {
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .mobile-hidden {
+    display: none;
+  }
+}
+
+@media (min-width: 641px) {
+  .mobile-only {
+    display: none;
+  }
+}
+
+.highlight {
+  border: 1px solid red;
+}

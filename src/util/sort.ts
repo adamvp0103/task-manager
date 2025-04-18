@@ -1,4 +1,4 @@
-import { Priorities, Task } from '../TaskContext';
+import { Priorities, Task } from '../AppContext';
 
 const priorityToValue = (priority: Priorities) => {
   switch (priority) {

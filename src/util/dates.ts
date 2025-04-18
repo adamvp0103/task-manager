@@ -1,4 +1,4 @@
-import { Task } from '../TaskContext';
+import { Task } from '../AppContext';
 
 // Method for retrieving tasks with deadlines that have passed
 export const getOverdueTasks = (tasks: Task[]) => {
@@ -55,4 +55,21 @@ export const getLaterTasks = (tasks: Task[]) => {
   return tasks.filter((task) => {
     return new Date(task.date).getTime() >= midnightTomorrow;
   });
+};
+
+export const getDisplayDate = (dateString: string) => {
+  const date = new Date(dateString);
+
+  const datePart = date.toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  });
+
+  const timePart = date.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+  });
+
+  return `${datePart} \u2013 ${timePart}`;
 };
