@@ -57,6 +57,7 @@ export const getLaterTasks = (tasks: Task[]) => {
   });
 };
 
+// Convert an ugly date string to a more readable, user-friendly string
 export const getDisplayDate = (dateString: string) => {
   const date = new Date(dateString);
 

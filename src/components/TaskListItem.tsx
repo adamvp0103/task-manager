@@ -10,11 +10,13 @@ const TaskListItem: FC<TaskListItemProps> = ({ task }) => {
   const { editId, setEditId, toggleTask, deleteTask, showForm } =
     useAppContext();
 
+  // Enter edit mode
   const handleEdit = (id: string) => {
     setEditId(id);
     showForm();
   };
 
+  // Completely remove task
   const handleDelete = (id: string) => {
     if (editId === id) {
       setEditId('');

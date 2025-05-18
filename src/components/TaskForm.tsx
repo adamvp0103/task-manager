@@ -11,23 +11,27 @@ export default function TaskForm() {
     Priorities.Medium
   );
 
+  // Executed when the user enters or exits edit mode
   useEffect(() => {
+    // If entering edit mode
     if (editId) {
-      // Get task being edited
+      // Find the task to edit
       const task = tasks.find((t) => t.id === editId);
 
-      // Populate fields with its values
+      // Populate the form with its current values
       setTaskInputValue(task?.task ?? '');
       setDateInputValue(task?.date ?? '');
       setPriorityInputValue(task?.priority ?? Priorities.Medium);
-    } else {
-      // If edit is canceled
+    }
+    // If exiting edit mode
+    else {
       setTaskInputValue('');
       setDateInputValue('');
       setPriorityInputValue(Priorities.Medium);
     }
   }, [editId]);
 
+  // If editing is canceled (no changes applied)
   const handleCancel = () => {
     if (editId) {
       setEditId('');
@@ -35,17 +39,21 @@ export default function TaskForm() {
     hideForm();
   };
 
+  // Handle the addition of a new task or the application of changes to an existing task (via edit)
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
 
+    // If applying changes to an existing task
     if (editId) {
       editTask({
         task: taskInputValue,
         date: dateInputValue,
         priority: priorityInputValue,
       });
-      setEditId('');
-    } else {
+      setEditId(''); // Exit edit mode
+    }
+    // If adding a new task
+    else {
       addTask({
         task: taskInputValue,
         date: dateInputValue,
@@ -53,6 +61,7 @@ export default function TaskForm() {
       });
     }
 
+    // Reset form
     setTaskInputValue('');
     setDateInputValue('');
     setPriorityInputValue(Priorities.Medium);
@@ -61,7 +70,11 @@ export default function TaskForm() {
   };
 
   return (
-    <div className={`fill-width ${formVisible ? '' : 'mobile-hidden'}`}>
+    <div
+      className={`desktop-aside fill-width ${
+        formVisible ? '' : 'mobile-hidden'
+      }`}
+    >
       <h2 className="page-heading">{editId ? 'Edit' : 'Add'} Task</h2>
       <form onSubmit={(event) => handleSubmit(event)}>
         <div className="card stack-vertically small-gap">

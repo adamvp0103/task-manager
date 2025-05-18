@@ -1,3 +1,48 @@
+# Task Manager
+
+## Author
+
+Adam Parks
+
+## Description
+
+A simple to-do list style web app.
+
+## Features
+
+* Add a task with the following information:
+    * Task itself (e.g. "Mow the lawn")
+    * Due date (including time, accurate to the minute)
+    * Priority level (low, medium, or high)
+* View added tasks in list format (grouped by due date and further sorted by priority and due date time)
+* Mark tasks as completed (with undo option)
+* Edit an existing task's information
+* Delete tasks permanently from the list
+* Optimize layout when viewing on differently sized viewports
+* View tasks from previous browser sessions via local storage
+
+## Future Implementation Ideas
+
+* Hide completed tasks
+* Create task categories and use them for filtering
+* Add tasks without a due date
+* Light mode
+* Color scheme selection
+
+## Tech Stack
+
+* HTML
+* JSX
+* Sass
+* TypeScript
+* React
+* Vite
+* Context API
+
+## License
+
+MIT (for more information, see [LICENSE.txt](./LICENSE.txt))
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

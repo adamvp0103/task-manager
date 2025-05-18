@@ -1,5 +1,6 @@
 import { Priorities, Task } from '../AppContext';
 
+// Helper function for sorting tasks by priority
 const priorityToValue = (priority: Priorities) => {
   switch (priority) {
     case Priorities.High:

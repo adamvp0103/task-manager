@@ -23,7 +23,16 @@ ol {
 
 .container {
   display: flex;
+  gap: 1rem;
   margin: 2rem 1rem 6rem;
+}
+
+.desktop-main {
+  flex: 1;
+}
+
+.desktop-aside {
+  flex: 1;
 }
 
 .page-heading {
@@ -184,6 +193,33 @@ ol {
 @media (min-width: 641px) {
   .mobile-only {
     display: none;
+  }
+}
+
+@media (min-width: 1008px) {
+  .container {
+    gap: 2rem;
+    margin: 2rem;
+  }
+
+  .desktop-main {
+    flex: 2;
+  }
+
+  .desktop-aside {
+    flex: 1;
+  }
+
+  .desktop-2-column {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 1rem;
+    column-gap: 1rem;
+    margin-bottom: 1rem;
+
+    & > * {
+      margin: 0;
+    }
   }
 }
 
