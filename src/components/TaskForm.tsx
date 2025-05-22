@@ -43,6 +43,8 @@ export default function TaskForm() {
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
 
+    console.log(`Submitted. Edit ID: ${editId}`);
+
     // If applying changes to an existing task
     if (editId) {
       editTask({
@@ -143,7 +145,11 @@ export default function TaskForm() {
         </div>
 
         <div className="space-evenly">
-          <button className="button red-hoverable" onClick={handleCancel}>
+          <button
+            className="button red-hoverable"
+            type="button"
+            onClick={handleCancel}
+          >
             Cancel
           </button>
           <button className="button green-hoverable" type="submit">
